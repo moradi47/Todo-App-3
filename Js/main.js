@@ -6,22 +6,41 @@ let modal = document.querySelector('.modal');
 let inputElem = document.querySelector('.input-task');
 let addTaskBtn = document.querySelector('.addTaskBtn');
 let divContent = document.querySelector('.content');
+let deleteBtn = document.querySelector('.deleteBtn');
 
 console.log(addTaskBtn);
 
 function openTodo(){
-    console.log('add')
     containerModal.style.display = 'flex';
 
 }
 
 function closeModal(){
-    console.log('close');
     containerModal.style.display = 'none';
 }
 
 function notCloseModal(event){
     event.stopPropagation();
+}
+
+function deleteTask(event){
+    event.target.parentElement.parentElement.parentElement.remove();
+}
+
+function doneTask(event){
+
+    let iconCheck = event.target.parentElement.parentElement.children[1].firstChild;
+    let nameTask = event.target.parentElement.lastChild;
+
+    if(event.target.checked){
+        iconCheck.classList.remove('gray');
+        iconCheck.classList.add('green');
+        nameTask.classList.add('done');
+    }else{
+        iconCheck.classList.remove('green');
+        iconCheck.classList.add('gray');
+        nameTask.classList.remove('done');
+    }
 }
 
 function addTodo(){
@@ -38,10 +57,12 @@ function addTodo(){
 
         pElem.innerHTML = inputElem.value;
         checkboxElem.setAttribute('type', 'checkbox');
+        checkboxElem.addEventListener('click', doneTask);
         checkIcon.setAttribute('class', 'fa fa-check');
         deleteIcon.setAttribute('class', 'fa fa-trash');
         checkBtn.setAttribute('class', 'checkBtn gray');
         deleteBtn.setAttribute('class', 'deleteBtn red');
+        deleteBtn.addEventListener('click', deleteTask);
         divElem1.setAttribute('class', 'task');
         divElem2.setAttribute('class', 'option');
         divContainer.setAttribute('class', 'card');
