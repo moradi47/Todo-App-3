@@ -9,9 +9,10 @@ let inputElem = document.querySelector('.input-task');
 
 console.log(modal)
 
-function addTodo(){
+function openTodo(){
     console.log('add')
     containerModal.style.display = 'flex';
+
 }
 
 function closeModal(){
@@ -23,8 +24,8 @@ function notCloseModal(event){
     event.stopPropagation();
 }
 
-addBtn.addEventListener('click', addTodo);
-liElem.addEventListener('click', addTodo);
+addBtn.addEventListener('click', openTodo);
+liElem.addEventListener('click', openTodo);
 closeIcon.addEventListener('click', closeModal);
 containerModal.addEventListener('click', closeModal);
 modal.addEventListener('click', notCloseModal);
