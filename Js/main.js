@@ -8,8 +8,6 @@ let addTaskBtn = document.querySelector('.addTaskBtn');
 let divContent = document.querySelector('.content');
 let deleteBtn = document.querySelector('.deleteBtn');
 
-console.log(addTaskBtn);
-
 function openTodo(){
     containerModal.style.display = 'flex';
 
