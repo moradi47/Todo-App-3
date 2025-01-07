@@ -7,6 +7,51 @@ let inputElem = document.querySelector('.input-task');
 let addTaskBtn = document.querySelector('.addTaskBtn');
 let divContent = document.querySelector('.content');
 let deleteBtn = document.querySelector('.deleteBtn');
+let taskArray=[];
+
+function createCard(name){
+    let pElem = document.createElement('p');
+        let checkboxElem = document.createElement('input');
+        let divElem1 = document.createElement('div');
+        let divElem2 = document.createElement('div');
+        let checkBtn = document.createElement('button');
+        let deleteBtn = document.createElement('button');
+        let checkIcon = document.createElement('i');
+        let deleteIcon = document.createElement('i');
+        let divContainer = document.createElement('div');
+
+        pElem.innerHTML = name;
+        checkboxElem.setAttribute('type', 'checkbox');
+        checkboxElem.addEventListener('click', doneTask);
+        checkIcon.setAttribute('class', 'fa fa-check');
+        deleteIcon.setAttribute('class', 'fa fa-trash');
+        checkBtn.setAttribute('class', 'checkBtn gray');
+        deleteBtn.setAttribute('class', 'deleteBtn red');
+        deleteBtn.addEventListener('click', deleteTask);
+        divElem1.setAttribute('class', 'task');
+        divElem2.setAttribute('class', 'option');
+        divContainer.setAttribute('class', 'card');
+
+        divElem1.append(checkboxElem, pElem);
+        checkBtn.append(checkIcon);
+        deleteBtn.append(deleteIcon);
+        divElem2.append(checkBtn, deleteBtn);
+        divContainer.append(divElem1,divElem2);
+        divContent.append(divContainer);
+}
+
+
+function loadHandler(){
+    
+    let tasks = JSON.parse(localStorage.getItem('task'));
+    if(tasks !== null){
+        
+        tasks.forEach((item) => {
+            createCard(item);
+        });
+    }
+    
+}
 
 function openTodo(){
     containerModal.style.display = 'flex';
@@ -41,36 +86,13 @@ function doneTask(event){
     }
 }
 
+
+
 function addTodo(){
     if(inputElem.value !== ''){
-        let pElem = document.createElement('p');
-        let checkboxElem = document.createElement('input');
-        let divElem1 = document.createElement('div');
-        let divElem2 = document.createElement('div');
-        let checkBtn = document.createElement('button');
-        let deleteBtn = document.createElement('button');
-        let checkIcon = document.createElement('i');
-        let deleteIcon = document.createElement('i');
-        let divContainer = document.createElement('div');
-
-        pElem.innerHTML = inputElem.value;
-        checkboxElem.setAttribute('type', 'checkbox');
-        checkboxElem.addEventListener('click', doneTask);
-        checkIcon.setAttribute('class', 'fa fa-check');
-        deleteIcon.setAttribute('class', 'fa fa-trash');
-        checkBtn.setAttribute('class', 'checkBtn gray');
-        deleteBtn.setAttribute('class', 'deleteBtn red');
-        deleteBtn.addEventListener('click', deleteTask);
-        divElem1.setAttribute('class', 'task');
-        divElem2.setAttribute('class', 'option');
-        divContainer.setAttribute('class', 'card');
-
-        divElem1.append(checkboxElem, pElem);
-        checkBtn.append(checkIcon);
-        deleteBtn.append(deleteIcon);
-        divElem2.append(checkBtn, deleteBtn);
-        divContainer.append(divElem1,divElem2);
-        divContent.append(divContainer);
+        createCard(inputElem.value);
+        taskArray.push(inputElem.value);
+        localStorage.setItem('task', JSON.stringify(taskArray));
     }
     inputElem.value = '';
     closeModal();
